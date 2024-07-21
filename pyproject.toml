@@ -4,12 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "quickcolor"
-description = "Anscii text color code tagging for python prints and logs"
+description = "Ascii text color code tagging for python prints and logs"
 readme = {file = "README.md", content-type = "text/markdown"}
 authors = [{name = "Ed Waldner", email = "waldevburry@proton.me"},]
 maintainers = [{name = "Ed Waldner", email = "waldevburry@proton.me"},]
 # dynamic = ["version"]
-version = "0.1.0"
+version = "0.1.1"
 requires-python = ">=3.9"
 dependencies = [
     "argcomplete",
