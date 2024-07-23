@@ -54,3 +54,4 @@ options:
 
 ## Acknowledgements
 Inspiration for the color names came from [this StackOverflow reply](https://stackoverflow.com/a/39452138).
+The color grid method inspiration came from [this StackOverflow reply](https://stackoverflow.com/a/21786287).
