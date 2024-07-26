@@ -9,6 +9,8 @@ import sys
 import argcomplete, argparse
 
 from .color_def import color, colors
+from .color_filter import strip_ansi_esc_sequences_from_string
+from .color_filter import strip_ansi_esc_sequences_from_input
 from .color_show import shell_colors, color_fields
 
 # ------------------------------------------------------------------------------------------------------
@@ -27,6 +29,9 @@ def cli():
 
         parser_colorFields = subparsers.add_parser('color.fields', help="display class color fields")
 
+        parser_stripColorFromStr = subparsers.add_parser('strip.color.string', help="strip color codes from a string")
+        parser_stripColorFromInput = subparsers.add_parser('strip.color.input', help="strip color codes from a byte input")
+
         argcomplete.autocomplete(parser)
         args = parser.parse_args()
         # print(args)
@@ -40,6 +45,23 @@ def cli():
 
         elif args.cmd == 'color.fields':
             color_fields()
+
+        elif args.cmd == 'strip.color.string':
+            testString=f'{color.CYELLOW2}Color formatted {color.CBLUE2}string!{color.CEND} --> More colors: {color.CCYAN}cyan, {color.CGREEN}green, {color.CVIOLET}violet!{color.CEND}'
+            hdr1 = 'Test string:'
+            print(f'{hdr1:<30}{testString}')
+            hdr2 = 'Stripped ANSI codes:'
+            print(f'{hdr2:<30}{strip_ansi_esc_sequences_from_string(stringWithAnsiCodes = testString)}')
+
+        elif args.cmd == 'strip.color.input':
+            testString = f'{colors.fg.lightred}Red, {colors.fg.lightgrey}White, and {colors.fg.lightblue}Blue!{colors.off}'
+            testBytes = testString.encode(encoding="utf-8")
+            hdr1 = 'Test string:'
+            print(f'{hdr1:<30}{testString}')
+            hdr2 = 'Test bytes:'
+            print(f'{hdr2:<30}{testBytes}')
+            hdr3 = 'Stripped ANSI codes:'
+            print(f'{hdr3:<30}{strip_ansi_esc_sequences_from_input(stringOrBytes = testBytes)}')
 
     except Exception as e:
         # 2024-0706 - note - due to circular logic, exception_details is explicitly implemented below
