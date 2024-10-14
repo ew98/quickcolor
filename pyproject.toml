@@ -9,7 +9,7 @@ readme = {file = "README.md", content-type = "text/markdown"}
 authors = [{name = "Ed Waldner", email = "waldevburry@proton.me"},]
 maintainers = [{name = "Ed Waldner", email = "waldevburry@proton.me"},]
 # dynamic = ["version"]
-version = "0.1.2"
+version = "0.1.3"
 requires-python = ">=3.9"
 dependencies = [
     "argcomplete",
@@ -26,6 +26,7 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Operating System :: OS Independent",
     "Topic :: Utilities",
 ]

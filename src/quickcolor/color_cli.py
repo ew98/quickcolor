@@ -11,7 +11,7 @@ import argcomplete, argparse
 from .color_def import color, colors
 from .color_filter import strip_ansi_esc_sequences_from_string
 from .color_filter import strip_ansi_esc_sequences_from_input
-from .color_show import shell_colors, color_fields
+from .color_show import shell_colors, color_fields, show_term_color
 
 # ------------------------------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------------------------------
@@ -24,13 +24,15 @@ def cli():
 
         subparsers = parser.add_subparsers(dest='cmd')
 
-        parser_shellColors = subparsers.add_parser('shell.colors', help="display a color chart for current shell")
-        parser_shellColors.add_argument('-e', '--extended', help="display extended chart", action="store_true")
+        p_shellColors = subparsers.add_parser('shell.colors', help="display a color chart for current shell")
+        p_shellColors.add_argument('-e', '--extended', help="display extended chart", action="store_true")
 
-        parser_colorFields = subparsers.add_parser('color.fields', help="display class color fields")
+        p_colorFields = subparsers.add_parser('color.fields', help="display class color fields")
 
-        parser_stripColorFromStr = subparsers.add_parser('strip.color.string', help="strip color codes from a string")
-        parser_stripColorFromInput = subparsers.add_parser('strip.color.input', help="strip color codes from a byte input")
+        p_stripColorFromStr = subparsers.add_parser('strip.color.string', help="strip color codes from a string")
+        p_stripColorFromInput = subparsers.add_parser('strip.color.input', help="strip color codes from a byte input")
+
+        p_termColors = subparsers.add_parser('term.colors', help="display terminal color options")
 
         argcomplete.autocomplete(parser)
         args = parser.parse_args()
@@ -45,6 +47,17 @@ def cli():
 
         elif args.cmd == 'color.fields':
             color_fields()
+
+        elif args.cmd == 'term.colors':
+            print()
+            for colorId in range(256):
+                print(show_term_color(colorId), end=' ', flush=True)
+                offsetColorId = colorId -4
+                if colorId == 3 or offsetColorId % 12 == 11:
+                # if colorId % 13 == 12:
+                    print()
+            print()
+            # print(' '.join([show_term_color(x) for x in range(256)]))
 
         elif args.cmd == 'strip.color.string':
             testString=f'{color.CYELLOW2}Color formatted {color.CBLUE2}string!{color.CEND} --> More colors: {color.CCYAN}cyan, {color.CGREEN}green, {color.CVIOLET}violet!{color.CEND}'
